@@ -38,7 +38,7 @@ router.get("/apartments", (req, res, next) => {
 });
 
 //
-// Get movie by id
+// Get apartment by id
 //
 router.get("/apartments/:id", (req, res, next) => {
   const id = req.query.id || "";
@@ -53,7 +53,7 @@ router.get("/apartments/:id", (req, res, next) => {
 });
 
 //
-// Post new movie
+// Post new apartment
 //
 router.post("/apartments", (req, res, next) => {
   const apartment = req.body || {};
@@ -71,7 +71,7 @@ router.post("/apartments", (req, res, next) => {
 router.all("*", (req, res) => {
   res.status(200);
   res.json({
-    description: "Aparments API version 2"
+    description: "Apartments API version 2"
   });
 });
 
