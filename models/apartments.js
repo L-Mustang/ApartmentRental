@@ -2,9 +2,10 @@ const express = require("express");
 const assert = require("assert");
 const router = express.Router();
 const db = require("../db/mysql-connector");
-const Queryhandler = require("../helpers/queryhandler")
 
+const Queryhandler = require("../helpers/queryhandler")
 const _queryhandler = new Queryhandler()
+
 class Apartments {
 
     constructor() {
@@ -47,7 +48,7 @@ class Apartments {
         //     next(ex);
         // }
 
-        _queryhandler.query(2, (err, result) => {
+        _queryhandler.getquery(1, (err, result) => {
             cb(null, result)
         })
 

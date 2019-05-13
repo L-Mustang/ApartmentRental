@@ -4,6 +4,9 @@ const Apartments = require("../models/apartments");
 const router = express.Router()
 const jwt = require("../helpers/jwt")
 
+const Queryhandler = require("../helpers/queryhandler")
+const _queryhandler = new Queryhandler()
+
 
 const _apartments = new Apartments();
 
@@ -32,28 +35,46 @@ router.all("*", (req, res, next) => {
 // Get all apartments
 //
 router.get("/apartments", (req, res, next) => {
-  _apartments.readAll((err, result) => {
+  // _apartments.readAll((err, result) => {
+  //   if (err) {
+  //     res.status(500).json(err.toString());
+  //   } else {
+  //     res.status(200).json(result);
+  //   }
+  // });
+
+  _queryhandler.query1((err, result) => {
     if (err) {
       res.status(500).json(err.toString());
     } else {
       res.status(200).json(result);
     }
   });
+
 });
 
 //
 // Get apartment by id
 //
 router.get("/apartments/:id", (req, res, next) => {
-  const id = req.query.id || "";
+  const id = req.params.id;
 
-  _apartments.read(id, (err, result) => {
+  // _apartments.read(id, (err, result) => {
+  //   if (err) {
+  //     res.status(500).json(err.toString());
+  //   } else {
+  //     res.status(200).json(result);
+  //   }
+  // });
+
+  _queryhandler.query3(id, (err, result) => {
     if (err) {
       res.status(500).json(err.toString());
     } else {
       res.status(200).json(result);
     }
   });
+
 });
 
 //
