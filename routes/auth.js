@@ -94,6 +94,7 @@ router.post("/login", (req, res, next) => {
           bcrypt.compareSync(req.body.password, rows[0].Password)
         ) {
           token = jwt.encodeToken(req.body.email);
+          console.log("Token: " + token)
           res.status(200).json({ token: token });
         } else {
           next(new Error("Invalid login, bye"));

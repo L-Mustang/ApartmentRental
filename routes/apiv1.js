@@ -8,12 +8,14 @@ const _apartments = new Apartments();
 
 // Check voor alle endpoints het token
 router.all("*", (req, res, next) => {
+  //console.log("Token: "+ req.header("x-access-token"))
   assert(
-    typeof req.headers["x-access-token"] == "string",
-    "token is not a string!"
+    typeof req.header("x-access-token") == "string",
+    "Token is not a string!"
   );
 
-  const token = req.header("X-Access-Token") || "";
+  const token = req.header("x-access-token") || "";
+
 
   jwt.decodeToken(token, (err, payload) => {
     if (err) {
