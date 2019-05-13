@@ -4,7 +4,6 @@ const router = express.Router()
 const jwt = require("../helpers/jwt")
 
 const _apartments = new Apartments();
-const saltRounds = 10;
 
 // Check voor alle endpoints het token
 router.all("*", (req, res, next) => {
