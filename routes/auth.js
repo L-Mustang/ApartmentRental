@@ -47,8 +47,8 @@ router.post("/register", (req, res, next) => {
 
     // Construct query object
     const query = {
-      sql: "INSERT INTO `user`(email, password) VALUES (?,?)",
-      values: [user.email, hash],
+      sql: "INSERT INTO `user`(FirstName, LastName, StreetAddress, PostalCode, City, DataOfBirth, PhoneNumber, EmailAddress, Password) VALUES (?,?,?,?,?,?,?,?,?)",
+      values: [user.firstName, user.lastName, user.streetAddress, user.postalCode, user.city, user.dateOfBirth, user.phoneNumber, user.email, hash],
       timeout: 2000
     };
 

@@ -6,6 +6,7 @@
         "dbServer": "coolsma.synology.me",
         "dbUsername": "2019-I14",
         "dbPassword": "2019-I14",
-        "dbSchema": "2019-i14-appartementen"
+        "dbSchema": "2019-i14-appartementen",
+        "port": 8080
     }
 }
