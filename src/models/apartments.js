@@ -1,4 +1,4 @@
-Class Apartments {
+class Apartments {
 
     constructor(){
         this._db = []
