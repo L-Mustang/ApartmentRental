@@ -4,6 +4,7 @@ const Apartments = require("../models/apartments");
 const router = express.Router()
 const jwt = require("../helpers/jwt")
 
+
 const _apartments = new Apartments();
 
 // Check voor alle endpoints het token
