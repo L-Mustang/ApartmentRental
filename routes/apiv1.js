@@ -1,5 +1,6 @@
 const express = require("express")
 const assert = require("assert")
+const Apartments = require("../models/apartments");
 const router = express.Router()
 const jwt = require("../helpers/jwt")
 

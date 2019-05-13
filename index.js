@@ -26,7 +26,7 @@ app.use("/auth", auth);
 
 // Routing protected by JWT
 app.use("/apiv1", apiv1);
-app.use("/apiv2", apiv2);
+//app.use("/apiv2", apiv2);
 
 // Optional log error
 function errorLoggerHandler(err, req, res, next) {
