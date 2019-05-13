@@ -72,15 +72,17 @@ router.post("/register", (req, res, next) => {
 router.post("/login", (req, res, next) => {
   try {
     // Validate with assert is string etc ..
+    assert(typeof req.body.email === "string", "Email is not a string!");
     assert(typeof req.body.password === "string", "Password is not a string!");
-    assert(typeof req.body.email === "string", "email is not a string!");
 
     // Construct query object
     const query = {
-      sql: "SELECT `password` FROM `user` WHERE `email`=?",
+      sql: "SELECT `Password` FROM `user` WHERE `EmailAddress`=?",
       values: [req.body.email],
       timeout: 2000
     };
+
+
 
     // Perform query
     db.query(query, (err, rows, fields) => {
@@ -89,7 +91,7 @@ router.post("/login", (req, res, next) => {
       } else {
         if (
           rows.length === 1 &&
-          bcrypt.compareSync(req.body.password, rows[0].password)
+          bcrypt.compareSync(req.body.password, rows[0].Password)
         ) {
           token = jwt.encodeToken(req.body.email);
           res.status(200).json({ token: token });

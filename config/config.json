@@ -2,6 +2,7 @@
     "local": {
 
     },
+    "secretkey": "MyServerSuperSecretKey-123454321AbCd-",
     "remote": {
         "dbServer": "coolsma.synology.me",
         "dbUsername": "2019-I14",
