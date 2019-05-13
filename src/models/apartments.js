@@ -4,6 +4,10 @@ class Apartments {
         this._db = []
     }
 
+    read(){
+        this._db = []
+    }
+
     //Crud operations - The Create
     create( apartment, cb = null) {
         this._db.push(apartment);
