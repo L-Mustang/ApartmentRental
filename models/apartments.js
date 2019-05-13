@@ -19,6 +19,14 @@ class Apartments {
     readAll(cb){
         cb( null, this._db );
     }
+
+    read(id, cb) {
+        this._db.find( (apartment) => {
+            if(apartment.id === id) {
+                cb(null, apartment);
+            }
+        })
+    }
 }
 
 module.exports = Apartments
