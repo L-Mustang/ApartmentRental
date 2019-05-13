@@ -2,7 +2,6 @@ const config = require("./config/config.json");
 const express = require("express");
 const bodyParser = require("body-parser");
 const apiv1 = require("./routes/apiv1");
-const apiv2 = require("./routes/apiv2");
 const auth = require("./routes/auth");
 const logger = require("tracer").dailyfile({
   root: "./logs",
