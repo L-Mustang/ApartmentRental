@@ -6,7 +6,7 @@ const auth = require("./routes/auth");
 const logger = require("tracer").dailyfile({
   root: "./logs",
   maxLogFiles: 10,
-  allLogsFileName: "movies",
+  allLogsFileName: "apartments",
   format: "{{timestamp}} <{{title}}> {{message}} (in {{file}}:{{line}})",
   dateformat: "HH:MM:ss.L"
 });

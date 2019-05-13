@@ -21,12 +21,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Laerositus/ApartmentRental.git"
+    "url": "git+https://github.com/Lord-Mustang/ApartmentRental.git"
   },
-  "author": "Laerositus",
+  "author": "Laerositus, Lord-Mustang, OneEyedKing",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Laerositus/ApartmentRental/issues"
+    "url": "https://github.com/Lord-Mustang/ApartmentRental/issues"
   },
-  "homepage": "https://github.com/Laerositus/ApartmentRental#readme"
+  "homepage": "https://github.com/Lord-Mustang/ApartmentRental#readme"
 }

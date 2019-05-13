@@ -7,7 +7,7 @@ const _apartments = new Apartments();
 const saltRounds = 10;
 
 // Check voor alle endpoints het token
-router.all("*", function(req, res, next) {
+router.all("*", (req, res, next) => {
   assert(
     typeof req.headers["x-access-token"] == "string",
     "token is not a string!"
@@ -28,7 +28,7 @@ router.all("*", function(req, res, next) {
 //
 // Get all apartments
 //
-router.get("/apartments", function(req, res, next) {
+router.get("/apartments", (req, res, next) => {
   _apartments.readAll((err, result) => {
     if (err) {
       res.status(500).json(err.toString());
@@ -41,7 +41,7 @@ router.get("/apartments", function(req, res, next) {
 //
 // Get movie by id
 //
-router.get("/apartments/:id", function(req, res, next) {
+router.get("/apartments/:id", (req, res, next) => {
   const id = req.query.id || "";
 
   _apartments.read(id, (err, result) => {
@@ -56,10 +56,10 @@ router.get("/apartments/:id", function(req, res, next) {
 //
 // Post new movie
 //
-router.post("/apartments", function(req, res, next) {
-  const movie = req.body || {};
+router.post("/apartments", (req, res, next) => {
+  const apartment = req.body || {};
 
-  _apartments.create(movie, (err, result) => {
+  _apartments.create(apartment, (err, result) => {
     if (err) {
       res.status(500).json(err.toString());
     } else {
@@ -69,7 +69,7 @@ router.post("/apartments", function(req, res, next) {
 });
 
 // Fall back, display some info
-router.all("*", function(req, res) {
+router.all("*", (req, res) => {
   res.status(200);
   res.json({
     description: "Aparments API version 2"
