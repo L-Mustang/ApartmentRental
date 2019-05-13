@@ -27,22 +27,28 @@ const saltRounds = 10;
 //
 // Register new user
 //
-router.post("/register", function(req, res, next) {
+router.post("/register", (req, res, next) => {
   try {
     // Validate with assert is string etc ..
+    assert(typeof req.body.first_name  === "string", " is not a string!");
+    assert(typeof req.body.last_name  === "string", " is not a string!");
+    assert(typeof req.body.street_address  === "string", " is not a string!");
+    assert(typeof req.body.postal_code  === "string", " is not a string!");
+    assert(typeof req.body.city  === "string", " is not a string!");
+    assert(typeof req.body.date_of_birth  === "string", " is not a string!");
+    assert(typeof req.body.phone_number  === "string", " is not a string!");
     assert(typeof req.body.email === "string", "Email is not a string!");
     assert(typeof req.body.password === "string", "Password is not a string!");
-    assert(typeof req.body.username === "string", "username is not a string!");
 
     // Create new user object, hash password (do not store in db).
     // Throws err if no valid object can be constructed
     const hash = bcrypt.hashSync(req.body.password, saltRounds);
-    const user = new User(req.body.email, hash, req.body.username);
+    const user = new User(req.body.first_name, req.body.last_name, req.body.street_address, req.body.postal_code, req.body.city, req.body.date_of_birth, req.body.phone_number, req.body.email, hash);
 
     // Construct query object
     const query = {
-      sql: "INSERT INTO `user`(email, password, username) VALUES (?,?,?)",
-      values: [user.email, hash, user.username],
+      sql: "INSERT INTO `user`(email, password) VALUES (?,?)",
+      values: [user.email, hash],
       timeout: 2000
     };
 
@@ -61,18 +67,18 @@ router.post("/register", function(req, res, next) {
 });
 
 //
-// Login with username / password
+// Login with email / password
 //
-router.post("/login", function(req, res, next) {
+router.post("/login", (req, res, next) => {
   try {
     // Validate with assert is string etc ..
     assert(typeof req.body.password === "string", "Password is not a string!");
-    assert(typeof req.body.username === "string", "username is not a string!");
+    assert(typeof req.body.email === "string", "email is not a string!");
 
     // Construct query object
     const query = {
-      sql: "SELECT `password` FROM `user` WHERE `username`=?",
-      values: [req.body.username],
+      sql: "SELECT `password` FROM `user` WHERE `email`=?",
+      values: [req.body.email],
       timeout: 2000
     };
 
@@ -85,7 +91,7 @@ router.post("/login", function(req, res, next) {
           rows.length === 1 &&
           bcrypt.compareSync(req.body.password, rows[0].password)
         ) {
-          token = jwt.encodeToken(req.body.username);
+          token = jwt.encodeToken(req.body.email);
           res.status(200).json({ token: token });
         } else {
           next(new Error("Invalid login, bye"));
@@ -98,7 +104,7 @@ router.post("/login", function(req, res, next) {
 });
 
 // Fall back, display some info
-router.all("*", function(req, res, next) {
+router.all("*", (req, res, next) => {
   next(new Error("Unknown endpoint"));
 });
 

@@ -3,8 +3,8 @@ class User {
       
       (this.email = this.validateEmail(email)),
       this.password = password,
-      (this.firstName = firstName),
-      (this.lastName = lastName),
+      this.firstName = firstName,
+      this.lastName = lastName,
       this.streetAddress = streetAddress,
       this.postalCode = postalCode,
       this.city = city,

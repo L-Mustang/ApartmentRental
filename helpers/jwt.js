@@ -3,9 +3,9 @@ const moment = require("moment");
 const jwt = require("jwt-simple");
 
 //
-// Encode (van username naar token)
+// Encode (van email naar token)
 //
-function encodeToken(username) {
+function encodeToken(email) {
   const playload = {
     exp: moment()
       .add(10, "days")
