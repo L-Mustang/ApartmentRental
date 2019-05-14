@@ -22,7 +22,7 @@
 					"raw": "{\n\t\"email\": \"test@test.test\",\n\t\"password\": \"test\"\n}"
 				},
 				"url": {
-					"raw": "localhost:8080/auth/login",
+					"raw": "https://github.com/Lord-Mustang/ApartmentRental/blob/Testing/routes/apiv1.js/auth/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
