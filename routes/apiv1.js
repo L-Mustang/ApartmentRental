@@ -1,6 +1,7 @@
 const express = require("express")
 const assert = require("assert")
 const Apartments = require("../models/apartments");
+const Apartment = require("../models/apartment");
 const router = express.Router()
 const jwt = require("../helpers/jwt")
 
@@ -57,7 +58,7 @@ router.get("/apartments", (req, res, next) => {
 // Get apartment by id
 //
 router.get("/apartments/:id", (req, res, next) => {
-  const id = req.params.id;
+  const id = req.params.i00d;
 
   // _apartments.read(id, (err, result) => {
   //   if (err) {
@@ -81,9 +82,26 @@ router.get("/apartments/:id", (req, res, next) => {
 // Post new apartment
 //
 router.post("/apartments", (req, res, next) => {
-  const apartment = req.body || {};
+  //const apartment = req.body || {};
 
-  _apartments.create(apartment, (err, result) => {
+  assert(typeof req.body.description  === "string", "Description is not a string!");
+  assert(typeof req.body.street_address  === "string", "StreetAddress is not a string!");
+  assert(typeof req.body.postal_code  === "string", "PostalCode is not a string!");
+  assert(typeof req.body.city  === "string", "City is not a string!");
+  assert(typeof req.body.user_id  === "string", "UserId is not a string!");
+
+  const apartment = new Apartment(req.body.description, req.body.street_address, req.body.postal_code, req.body.city, req.body.user_id)
+
+  console.log(apartment)
+  // _apartments.create(apartment, (err, result) => {
+  //   if (err) {
+  //     res.status(500).json(err.toString());
+  //   } else {
+  //     res.status(200).json(result);
+  //   }
+  // });
+
+    _queryhandler.query2(apartment, (err, result) => {
     if (err) {
       res.status(500).json(err.toString());
     } else {

@@ -38,7 +38,32 @@ class Queryhandler {
             next(ex);
         }
     }
-     
+
+    query2(apartment, cb) {
+        try {
+            const query = {
+                sql: `SET @v1 := (SELECT MAX(ApartmentId) FROM apartment)+1;
+                INSERT INTO apartment (ApartmentId, Description, StreetAddress, PostalCode, City, UserId) VALUES (@v1, ?, ?, ?, ?, ?)`,
+                values: [apartment.description, apartment.streetAddress, apartment.postalCode, apartment.city, apartment.userId],
+                timeout: 2000
+            }
+
+            console.log(query)
+            // Perform query
+            db.query(query, (err, rows, fields) => {
+                if (err) {
+                    console.log(err);
+                    cb(err, rows)
+                } else {
+                    console.log(rows)
+                    cb(null, rows)
+                }
+            });
+
+        } catch (ex) {
+            next(ex);
+        }
+    }
 
     //TODO: VRAAG STELLEN OVER NULL RETURN BIJ VALUE
 

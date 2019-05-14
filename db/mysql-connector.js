@@ -30,7 +30,8 @@ const connectionSettings = {
   password: config.local.dbPassword,
   database: config.local.dbSchema,
   port: 3306,
-  debug: false
+  debug: false,
+  multipleStatements: true
 };
 
 var pool;
