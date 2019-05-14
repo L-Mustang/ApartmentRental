@@ -212,34 +212,7 @@ query7(var1, cb) {
         next(ex);
     }
 }
-query8(var1, var2, cb) {
 
-    try {
-        const query = {
-            sql: `SELECT * 
-            FROM reservation 
-            JOIN apartment 
-            ON reservation.ApartmentId = apartment.ApartmentId 
-            WHERE reservation.ApartmentId = ? AND reservation.ReservationID = ?`,
-            values: [var1, var2],
-            timeout: 2000
-        };
-        console.log(query)
-        // Perform query
-        db.query(query, (err, rows, fields) => {
-            if (err) {
-                console.log(err);
-                cb(err, rows)
-                //next(err);
-            } else {
-                console.log(rows)
-                cb(null, rows)
-            }
-        });
-    } catch (ex) {
-        next(ex);
-    }
-}
 
 
 }
