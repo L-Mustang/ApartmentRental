@@ -2,9 +2,11 @@ const express = require("express")
 const assert = require("assert")
 const Apartments = require("../models/apartments");
 const Apartment = require("../models/apartment");
+const Reservation = require("../models/reservation");
 const router = express.Router()
 const jwt = require("../helpers/jwt")
 const logger = require("tracer").colorConsole();
+const db = require("../db/mysql-connector");
 
 const Queryhandler = require("../helpers/queryhandler")
 const _queryhandler = new Queryhandler()
@@ -125,6 +127,29 @@ router.delete("/apartments/:id", (req, res, next) => {
   logger.debug(token)
 
     _queryhandler.query5(apartmentId, token, (err, result) => {
+    if (err) {
+      res.status(500).json(err.toString());
+    } else {
+      res.status(200).json(result);
+    }
+  });
+});
+
+//
+// Post new reservation
+//
+router.post("/apartments/:id/reservations", (req, res, next) => {
+  const apartmentId = req.params.id;
+
+  assert(typeof req.body.start_date  === "string", "StartDate is not a string!");
+  assert(typeof req.body.end_date  === "string", "EndDate is not a string!");
+  assert(typeof req.body.status  === "string", "Status is not a string!");
+
+  const reservation = new Reservation(req.body.start_date, req.body.end_date, req.body.status, null, apartmentId)
+
+  logger.info(reservation)
+
+    _queryhandler.query6(reservation, token, (err, result) => {
     if (err) {
       res.status(500).json(err.toString());
     } else {

@@ -17,13 +17,16 @@ function encodeToken(email) {
 }
 
 //
-// Decode (van token naar username)
+// Decode (returns decoded token)
 //
 function decode(token) {
     const payload = jwt.decode(token, settings.secretkey);
     return payload
 }
 
+//
+// Decode (van token naar username)
+//
 function decodeToken(token, cb) {
   try {
     const payload = jwt.decode(token, settings.secretkey);
