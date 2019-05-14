@@ -7,6 +7,7 @@ before_script:
   - node --version
   - npm --version
   # - node_modules/.bin/newman --version
+  - node index.js
 
 script:
   - node_modules/.bin/newman run tests/Prog4.postman_collection.json -e tests/tests.postman_environment.json
