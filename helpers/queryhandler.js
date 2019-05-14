@@ -70,7 +70,6 @@ class Queryhandler {
     query3(var1, cb) {
 
         try {
-            // Perform query
             const query = {
                 sql: `SELECT apartment.StreetAddress, apartment.PostalCode, apartment.City, user.FirstName, user.LastName, user.DataOfBirth, reservation.ReservationId  
                 FROM apartment
@@ -83,6 +82,7 @@ class Queryhandler {
                 timeout: 2000
             };
             console.log(query)
+            // Perform query
             db.query(query, (err, rows, fields) => {
                 if (err) {
                     console.log(err);
@@ -94,6 +94,33 @@ class Queryhandler {
                 }
             });
         } catch (ex) {
+            next(ex);
+        }
+    }
+
+    query4(apartment, var1, cb) {
+
+        try {
+            const query = {
+                sql: `UPDATE apartment
+                SET Description = ?, StreetAddress = ?,  PostalCode = ?, City = ?, UserId = ?
+                WHERE apartment.ApartmentId = ?;`,
+                values: [apartment.description, apartment.streetAddress, apartment.postalCode, apartment.city, apartment.userId, var1],
+                timeout: 2000
+            };
+            console.log(query)
+            // Perform query
+            db.query(query, (err, rows, fields) => {
+                if (err) {
+                    console.log(err);
+                    cb(err, rows)
+                    //next(err);
+                } else {
+                    console.log(rows)
+                    cb(null, rows)
+                }
+            });
+        }catch (ex) {
             next(ex);
         }
     }

@@ -55,30 +55,6 @@ router.get("/apartments", (req, res, next) => {
 });
 
 //
-// Get apartment by id
-//
-router.get("/apartments/:id", (req, res, next) => {
-  const id = req.params.i00d;
-
-  // _apartments.read(id, (err, result) => {
-  //   if (err) {
-  //     res.status(500).json(err.toString());
-  //   } else {
-  //     res.status(200).json(result);
-  //   }
-  // });
-
-  _queryhandler.query3(id, (err, result) => {
-    if (err) {
-      res.status(500).json(err.toString());
-    } else {
-      res.status(200).json(result);
-    }
-  });
-
-});
-
-//
 // Post new apartment
 //
 router.post("/apartments", (req, res, next) => {
@@ -102,6 +78,64 @@ router.post("/apartments", (req, res, next) => {
   // });
 
     _queryhandler.query2(apartment, (err, result) => {
+    if (err) {
+      res.status(500).json(err.toString());
+    } else {
+      res.status(200).json(result);
+    }
+  });
+});
+
+//
+// Get apartment by id
+//
+router.get("/apartments/:id", (req, res, next) => {
+  const id = req.params.id;
+
+  // _apartments.read(id, (err, result) => {
+  //   if (err) {
+  //     res.status(500).json(err.toString());
+  //   } else {
+  //     res.status(200).json(result);
+  //   }
+  // });
+
+  _queryhandler.query3(id, (err, result) => {
+    if (err) {
+      res.status(500).json(err.toString());
+    } else {
+      res.status(200).json(result);
+    }
+  });
+
+});
+
+//
+// Update apartment by id
+//
+router.put("/apartments", (req, res, next) => {
+  //const apartment = req.body || {};
+
+  assert(typeof req.body.apartment_id  === "string", "ApartmentId is not a string!");
+  let apartmentId = req.body.apartment_id;
+  assert(typeof req.body.description  === "string", "Description is not a string!");
+  assert(typeof req.body.street_address  === "string", "StreetAddress is not a string!");
+  assert(typeof req.body.postal_code  === "string", "PostalCode is not a string!");
+  assert(typeof req.body.city  === "string", "City is not a string!");
+  assert(typeof req.body.user_id  === "string", "UserId is not a string!");
+
+  const apartment = new Apartment(req.body.description, req.body.street_address, req.body.postal_code, req.body.city, req.body.user_id)
+
+  console.log(apartmentId, apartment)
+  // _apartments.create(apartment, (err, result) => {
+  //   if (err) {
+  //     res.status(500).json(err.toString());
+  //   } else {
+  //     res.status(200).json(result);
+  //   }
+  // });
+
+    _queryhandler.query4(apartment, apartmentId, (err, result) => {
     if (err) {
       res.status(500).json(err.toString());
     } else {
