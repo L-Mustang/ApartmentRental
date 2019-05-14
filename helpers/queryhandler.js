@@ -16,23 +16,18 @@ class Queryhandler {
         try {
             // Perform query
             const query = {
-                sql: `SELECT apartment.StreetAddress, apartment.PostalCode, apartment.City, user.FirstName, user.LastName, user.DataOfBirth, reservation.ReservationId  
-                FROM apartment
-                LEFT JOIN reservation
-                ON apartment.ApartmentId = reservation.ApartmentId
-                LEFT JOIN user
-                ON apartment.UserId = user.UserId;`,
+                sql: `SELECT apartment.StreetAddress, apartment.PostalCode, apartment.City, user.FirstName, user.LastName, user.DataOfBirth, reservation.ReservationId FROM apartment LEFT JOIN reservation ON apartment.ApartmentId = reservation.ApartmentId LEFT JOIN user ON apartment.UserId = user.UserId;`,
                 timeout: 2000
             };
 
-            console.log(query)
+            logger.debug(query)
             db.query(query, (err, rows, fields) => {
                 if (err) {
-                    console.log(err);
+                    logger.error(err);
                     cb(err, rows)
                     //next(err);
                 } else {
-                    console.log(rows)
+                    logger.info(rows)
                     cb(null, rows)
                 }
             });
@@ -50,14 +45,14 @@ class Queryhandler {
                 timeout: 2000
             }
 
-            console.log(query)
+            logger.debug(query)
             // Perform query
             db.query(query, (err, rows, fields) => {
                 if (err) {
-                    console.log(err);
+                    logger.err(err);
                     cb(err, rows)
                 } else {
-                    console.log(rows)
+                    logger.info(rows)
                     cb(null, rows)
                 }
             });
@@ -73,25 +68,19 @@ class Queryhandler {
 
         try {
             const query = {
-                sql: `SELECT apartment.StreetAddress, apartment.PostalCode, apartment.City, user.FirstName, user.LastName, user.DataOfBirth, reservation.ReservationId  
-                FROM apartment
-                LEFT JOIN reservation
-                ON apartment.ApartmentId = reservation.ApartmentId
-                LEFT JOIN user
-                ON apartment.UserId = user.UserId
-                WHERE apartment.ApartmentId = ?`,
+                sql: `SELECT apartment.StreetAddress, apartment.PostalCode, apartment.City, user.FirstName, user.LastName, user.DataOfBirth, reservation.ReservationId FROM apartment LEFT JOIN reservation ON apartment.ApartmentId = reservation.ApartmentId LEFT JOIN user ON apartment.UserId = user.UserId WHERE apartment.ApartmentId = ?`,
                 values: [var1],
                 timeout: 2000
             };
-            console.log(query)
+            logger.debug(query)
             // Perform query
             db.query(query, (err, rows, fields) => {
                 if (err) {
-                    console.log(err);
+                    logger.error(err);
                     cb(err, rows)
                     //next(err);
                 } else {
-                    console.log(rows)
+                    logger.info(rows)
                     cb(null, rows)
                 }
             });
@@ -104,82 +93,169 @@ class Queryhandler {
 
         try {
             const query = {
-                sql: `UPDATE apartment
-                SET Description = ?, StreetAddress = ?,  PostalCode = ?, City = ?, UserId = ?
-                WHERE apartment.ApartmentId = ?;`,
+                sql: `UPDATE apartment SET Description = ?, StreetAddress = ?,  PostalCode = ?, City = ?, UserId = ? WHERE apartment.ApartmentId = ?;`,
                 values: [apartment.description, apartment.streetAddress, apartment.postalCode, apartment.city, apartment.userId, var1],
                 timeout: 2000
             };
-            console.log(query)
+            logger.debug(query)
             // Perform query
             db.query(query, (err, rows, fields) => {
                 if (err) {
-                    console.log(rows);
+                    logger.error(rows);
                     cb(err, rows)
                     //next(err);
                 } else {
-                    console.log(rows)
+                    logger.info(rows)
                     cb(null, rows)
                 }
             });
-        }catch (ex) {
+        } catch (ex) {
             next(ex);
         }
     }
 
     query5(var1, var2, cb) {
         try {
-            const query1 = {
+            const query = {
                 sql: `SELECT user.EmailAddress FROM user LEFT JOIN apartment ON user.UserId = apartment.UserId WHERE apartment.ApartmentId = ?;`,
                 values: [var1],
                 timeout: 2000
             };
-            logger.debug(query1)
+            logger.debug(query)
             // Perform query
-            db.query(query1, (err, rows, fields) => {
+            db.query(query, (err, rows, fields) => {
                 if (err) {
                     logger.debug(rows);
                     cb(err, rows)
                     //next(err);
                 } else {
-                    if (!(rows.length==0)) {
-                        const email1 = rows[0].EmailAddress                          
+                    if (!(rows.length == 0)) {
+                        const email1 = rows[0].EmailAddress
                         const email2 = jwt.decode(var2).sub
                         logger.info("Retrieved email: ", email1)
                         logger.info("Decoded token email: ", email2)
 
-                        if (email1==email2){
-                            const query2 = {
+                        if (email1 == email2) {
+                            const query = {
                                 sql: `DELETE FROM apartment WHERE apartment.ApartmentId=?;`,
                                 values: [var1],
                                 timeout: 2000
                             };
-                            
-                            console.log(query2)
+
+                            logger.debug(query)
                             // Perform query
-                            db.query(query2, (err, rows, fields) => {
+                            db.query(query, (err, rows, fields) => {
                                 if (err) {
-                                    console.log(rows);
+                                    logger.error(rows);
                                     cb(err, rows)
                                     //next(err);
                                 } else {
-                                    console.log(rows)
+                                    logger.info(rows)
                                     cb(null, rows)
                                 }
                             });
                         }
                         else {
                             logger.warn("Incorrect/invalid token: you cannot delete this entry")
-                            cb(null, "Incorrect/invalid token: you cannot delete this entry")
+                            cb("Incorrect/invalid token: you cannot delete this entry", null)
                         }
                     }
                     else {
                         logger.warn("No apartment found")
-                        cb(null, "No apartment found")
+                        cb("No apartment found", null)
                     }
                 }
             });
-        }catch (ex) {
+        } catch (ex) {
+            next(ex);
+        }
+    }
+
+    query6(reservation, var1, cb) {
+        try {
+            var startDate = reservation.startDate;
+            var currentDate = new Date();
+            var userId;
+
+            startDate = new Date(startDate);
+
+            if (startDate < currentDate) {
+                logger.warn("StartDate is smaller than the current date")
+                cb("StartDate is smaller than the current date", null)
+            }
+            else {
+                var endDate = reservation.endDate;
+                endDate = new Date(endDate);
+                if (endDate <= startDate) {
+                    logger.warn("EndDate is greater than or equal to StartDate")
+                    cb("EndDate is greater than or equal to StartDate", null)
+                }
+                else {
+                    const email = jwt.decode(var1).sub
+                    const query = {
+                        sql: `SELECT user.UserId FROM user WHERE user.EmailAddress = ?;`,
+                        values: [email],
+                        timeout: 2000
+                    };
+                    logger.debug(query)
+
+                    // Perform query for userId
+                    db.query(query, (err, rows, fields) => {
+                        if (err) {
+                            logger.debug(rows);
+                            cb(err, rows)
+                        } else {
+                            userId = rows[0].UserId
+                            logger.info("User ID: ", userId)
+
+                            const query = {
+                                sql: `SELECT apartment.ApartmentId FROM apartment WHERE apartment.ApartmentId = ?;`,
+                                values: [reservation.apartmentId],
+                                timeout: 2000
+                            };
+                            logger.debug(query)
+
+                            // Perform query for apartmentId
+                            db.query(query, (err, rows, fields) => {
+                                if (err) {
+                                    logger.error(rows);
+                                    cb(err, rows)
+                                } else {
+                                    logger.info(rows);
+                                    if (!(rows.length == 0)) {
+
+                                        const query = {
+                                            sql: `INSERT INTO reservation (StartDate, EndDate, Status, UserId, ApartmentId) VALUES (?, ?, ?, ?, ?);`,
+                                            values: [reservation.startDate, reservation.endDate, reservation.status, userId, reservation.apartmentId],
+                                            timeout: 2000
+                                        };
+                                        logger.debug(query)
+                                        // Perform query
+                                        db.query(query, (err, rows, fields) => {
+                                            if (err) {
+                                                logger.error(rows);
+                                                cb(err, rows)
+                                                //next(err);
+                                            } else {
+                                                logger.info(rows)
+                                                cb(null, rows)
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        logger.warn("ApartmentId invalid")
+                                        cb("ApartmentId invalid", null)
+                                    }
+                                }
+                            })
+
+
+                        }
+                    })
+                }
+            }
+        }
+        catch (ex) {
             next(ex);
         }
     }
@@ -270,6 +346,5 @@ query9(status, var1, var2, cb) {
 }
 
 }
-
 
 module.exports = Queryhandler
