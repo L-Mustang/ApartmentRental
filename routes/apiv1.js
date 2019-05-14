@@ -11,6 +11,8 @@ const _queryhandler = new Queryhandler()
 
 const _apartments = new Apartments();
 
+var token;
+
 // Check voor alle endpoints het token
 router.all("*", (req, res, next) => {
   //console.log("Token: "+ req.header("x-access-token"))
@@ -19,7 +21,7 @@ router.all("*", (req, res, next) => {
     "Token is not a string!"
   );
 
-  const token = req.header("x-access-token") || "";
+  token = req.header("x-access-token") || "";
 
 
   jwt.decodeToken(token, (err, payload) => {
@@ -113,11 +115,9 @@ router.get("/apartments/:id", (req, res, next) => {
 //
 // Update apartment by id
 //
-router.put("/apartments", (req, res, next) => {
-  //const apartment = req.body || {};
+router.put("/apartments/:id", (req, res, next) => {
+  const apartmentId = req.params.id;
 
-  assert(typeof req.body.apartment_id  === "string", "ApartmentId is not a string!");
-  let apartmentId = req.body.apartment_id;
   assert(typeof req.body.description  === "string", "Description is not a string!");
   assert(typeof req.body.street_address  === "string", "StreetAddress is not a string!");
   assert(typeof req.body.postal_code  === "string", "PostalCode is not a string!");
@@ -127,15 +127,25 @@ router.put("/apartments", (req, res, next) => {
   const apartment = new Apartment(req.body.description, req.body.street_address, req.body.postal_code, req.body.city, req.body.user_id)
 
   console.log(apartmentId, apartment)
-  // _apartments.create(apartment, (err, result) => {
-  //   if (err) {
-  //     res.status(500).json(err.toString());
-  //   } else {
-  //     res.status(200).json(result);
-  //   }
-  // });
 
     _queryhandler.query4(apartment, apartmentId, (err, result) => {
+    if (err) {
+      res.status(500).json(err.toString());
+    } else {
+      res.status(200).json(apartment);
+    }
+  });
+});
+
+//
+// Delete apartment by id, if owned by token
+//
+router.delete("/apartments/:id", (req, res, next) => {
+  const apartmentId = req.params.id;
+
+  console.log(token)
+
+    _queryhandler.query5(apartmentId, token, (err, result) => {
     if (err) {
       res.status(500).json(err.toString());
     } else {

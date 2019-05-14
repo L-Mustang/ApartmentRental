@@ -37,7 +37,7 @@ function errorLoggerHandler(err, req, res, next) {
 // Set default error handler
 function errorResponseHandler(err, req, res, next) {
   res.status(500);
-  res.json({ mgs: "Go, you hacker!" });
+  res.json({ msg: "Go, you hacker!" });
 }
 
 // Register the error handlers

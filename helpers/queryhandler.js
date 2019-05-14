@@ -4,6 +4,8 @@ const Apartments = require("../models/apartments");
 const router = express.Router()
 const db = require("../db/mysql-connector");
 const jwt = require("../helpers/jwt")
+const logger = require("tracer").colorConsole();
+
 
 class Queryhandler {
 
@@ -112,7 +114,7 @@ class Queryhandler {
             // Perform query
             db.query(query, (err, rows, fields) => {
                 if (err) {
-                    console.log(err);
+                    console.log(rows);
                     cb(err, rows)
                     //next(err);
                 } else {
@@ -124,6 +126,64 @@ class Queryhandler {
             next(ex);
         }
     }
+
+    query5(var1, var2, cb) {
+        try {
+            const query1 = {
+                sql: `SELECT user.EmailAddress FROM user LEFT JOIN apartment ON user.UserId = apartment.UserId WHERE apartment.ApartmentId = ?;`,
+                values: [var1],
+                timeout: 2000
+            };
+            logger.debug(query1)
+            // Perform query
+            db.query(query1, (err, rows, fields) => {
+                if (err) {
+                    logger.debug(rows);
+                    cb(err, rows)
+                    //next(err);
+                } else {
+                    if (!(rows.length==0)) {
+                        const email1 = rows[0].EmailAddress                          
+                        const email2 = jwt.decode(var2).sub
+                        logger.info("Retrieved email: ", email1)
+                        logger.info("Decoded token email: ", email2)
+
+                        if (email1==email2){
+                            const query2 = {
+                                sql: `DELETE FROM apartment WHERE apartment.ApartmentId=?;`,
+                                values: [var1],
+                                timeout: 2000
+                            };
+                            
+                            console.log(query2)
+                            // Perform query
+                            db.query(query2, (err, rows, fields) => {
+                                if (err) {
+                                    console.log(rows);
+                                    cb(err, rows)
+                                    //next(err);
+                                } else {
+                                    console.log(rows)
+                                    cb(null, rows)
+                                }
+                            });
+                        }
+                        else {
+                            logger.warn("Incorrect/invalid token: you cannot delete this entry")
+                            cb(null, "Incorrect/invalid token: you cannot delete this entry")
+                        }
+                    }
+                    else {
+                        logger.warn("No apartment found")
+                        cb(null, "No apartment found")
+                    }
+                }
+            });
+        }catch (ex) {
+            next(ex);
+        }
+    }
+
 
 }
 

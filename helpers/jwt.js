@@ -20,6 +20,11 @@ function encodeToken(email) {
 //
 // Decode (van token naar username)
 //
+function decode(token) {
+    const payload = jwt.decode(token, settings.secretkey);
+    return payload
+}
+
 function decodeToken(token, cb) {
   try {
     const payload = jwt.decode(token, settings.secretkey);
@@ -37,5 +42,6 @@ function decodeToken(token, cb) {
 
 module.exports = {
   encodeToken,
-  decodeToken
+  decodeToken,
+  decode
 };
