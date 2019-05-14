@@ -185,6 +185,26 @@ router.get("/apartments/:id/reservation/:id2", (req, res, next) => {
 
 });
 
+//
+// Update reservation status by apartment id and reservation id
+//
+router.put("/apartments/:id/reservation/:id2", (req, res, next) => {
+  const apartmentId = req.params.id;
+  const reservationId = req.params.id2;
+
+  assert(typeof req.body.status  === "string", "Description is not a string!");
+
+  const status = req.body.status
+
+    _queryhandler.query9(status, apartmentId, reservationId, (err, result) => {
+    if (err) {
+      res.status(500).json(err.toString());
+    } else {
+      res.status(200).json(status);
+    }
+  });
+});
+
 
 // Fall back, display some info
 router.all("*", (req, res) => {

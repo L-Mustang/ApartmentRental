@@ -242,6 +242,33 @@ query8(var1, var2, cb) {
     }
 }
 
+query9(status, var1, var2, cb) {
+
+    try {
+        const query = {
+            sql: `UPDATE reservation
+            SET status = ?
+                WHERE reservation.apartmentId = ? AND reservation.reservationID = ?;`,
+            values: [status, var1, var2],
+            timeout: 2000
+        };
+        console.log(query)
+        // Perform query
+        db.query(query, (err, rows, fields) => {
+            if (err) {
+                console.log(rows);
+                cb(err, rows)
+                //next(err);
+            } else {
+                console.log(rows)
+                cb(null, rows)
+            }
+        });
+    }catch (ex) {
+        next(ex);
+    }
+}
+
 }
 
 
