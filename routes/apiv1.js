@@ -154,6 +154,37 @@ router.delete("/apartments/:id", (req, res, next) => {
   });
 });
 
+//
+// Get reservation by apartment id
+//
+router.get("/apartments/:id/reservation", (req, res, next) => {
+  const id = req.params.id;
+  _queryhandler.query7(id, (err, result) => {
+    if (err) {
+      res.status(500).json(err.toString());
+    } else {
+      res.status(200).json(result);
+    }
+  });
+
+});
+
+//
+// Get reservation by apartment id and reservation id
+//
+router.get("/apartments/:id/reservation/:id2", (req, res, next) => {
+  const id = req.params.id;
+  const id2 = req.params.id2;
+  _queryhandler.query8(id, id2, (err, result) => {
+    if (err) {
+      res.status(500).json(err.toString());
+    } else {
+      res.status(200).json(result);
+    }
+  });
+
+});
+
 // Fall back, display some info
 router.all("*", (req, res) => {
   res.status(200);
