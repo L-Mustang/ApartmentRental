@@ -260,90 +260,145 @@ class Queryhandler {
         }
     }
 
-query7(var1, cb) {
+    query7(var1, cb) {
 
-    try {
-        const query = {
-            sql: `SELECT * 
+        try {
+            const query = {
+                sql: `SELECT * 
             FROM reservation 
             JOIN apartment 
             ON reservation.ApartmentId = apartment.ApartmentId 
             WHERE reservation.ApartmentId = ?`,
-            values: [var1],
-            timeout: 2000
-        };
-        console.log(query)
-        // Perform query
-        db.query(query, (err, rows, fields) => {
-            if (err) {
-                console.log(err);
-                cb(err, rows)
-                //next(err);
-            } else {
-                console.log(rows)
-                cb(null, rows)
-            }
-        });
-    } catch (ex) {
-        next(ex);
+                values: [var1],
+                timeout: 2000
+            };
+            logger.debug(query)
+            // Perform query
+            db.query(query, (err, rows, fields) => {
+                if (err) {
+                    logger.error(err);
+                    cb(err, rows)
+                    //next(err);
+                } else {
+                    logger.info(rows)
+                    cb(null, rows)
+                }
+            });
+        } catch (ex) {
+            next(ex);
+        }
     }
-}
 
-query8(var1, var2, cb) {
+    query8(var1, var2, cb) {
 
-    try {
-        const query = {
-            sql: `SELECT * 
+        try {
+            const query = {
+                sql: `SELECT * 
             FROM reservation 
             JOIN apartment 
             ON reservation.ApartmentId = apartment.ApartmentId 
             WHERE reservation.ApartmentId = ? AND reservation.ReservationId = ?`,
-            values: [var1, var2],
-            timeout: 2000
-        };
-        console.log(query)
-        // Perform query
-        db.query(query, (err, rows, fields) => {
-            if (err) {
-                console.log(err);
-                cb(err, rows)
-                //next(err);
-            } else {
-                console.log(rows)
-                cb(null, rows)
-            }
-        });
-    } catch (ex) {
-        next(ex);
+                values: [var1, var2],
+                timeout: 2000
+            };
+            console.log(query)
+            // Perform query
+            db.query(query, (err, rows, fields) => {
+                if (err) {
+                    console.log(err);
+                    cb(err, rows)
+                    //next(err);
+                } else {
+                    console.log(rows)
+                    cb(null, rows)
+                }
+            });
+        } catch (ex) {
+            next(ex);
+        }
     }
-}
 
-query9(status, var1, var2, cb) {
+    query9(status, var1, var2, var3, cb) {
+        try {
+            const query = {
+                sql: `SELECT user.EmailAddress FROM user LEFT JOIN apartment ON user.UserId = apartment.UserId WHERE apartment.ApartmentId = ?;`,
+                values: [var1],
+                timeout: 2000
+            };
+            logger.debug(query)
+            // Perform query
+            db.query(query, (err, rows, fields) => {
+                if (err) {
+                    logger.debug(rows);
+                    cb(err, rows)
+                    //next(err);
+                } else {
+                    if (!(rows.length == 0)) {
+                        const email1 = rows[0].EmailAddress
+                        const email2 = jwt.decode(var3).sub
+                        logger.info("Retrieved email: ", email1)
+                        logger.info("Decoded token email: ", email2)
 
-    try {
-        const query = {
-            sql: `UPDATE reservation
-            SET status = ?
-                WHERE reservation.apartmentId = ? AND reservation.reservationID = ?;`,
-            values: [status, var1, var2],
-            timeout: 2000
-        };
-        console.log(query)
-        // Perform query
-        db.query(query, (err, rows, fields) => {
-            if (err) {
-                console.log(rows);
-                cb(err, rows)
-                //next(err);
-            } else {
-                console.log(rows)
-                cb(null, rows)
-            }
-        });
-    }catch (ex) {
-        next(ex);
+                        if (email1 == email2) {
+                            const query = {
+                                sql: `UPDATE reservation SET status = ? WHERE reservation.apartmentId = ? AND reservation.reservationID = ?;`,
+                                values: [status, var1, var2],
+                                timeout: 2000
+                            };
+
+                            logger.debug(query)
+                            // Perform query
+                            db.query(query, (err, rows, fields) => {
+                                if (err) {
+                                    logger.error(rows);
+                                    cb(err, rows)
+                                    //next(err);
+                                } else {
+                                    logger.info(rows)
+                                    cb(null, rows)
+                                }
+                            });
+                        }
+                        else {
+                            logger.warn("Incorrect/invalid token: you cannot alter this entry")
+                            cb("Incorrect/invalid token: you cannot alter this entry", null)
+                        }
+                    }
+                    else {
+                        logger.warn("No apartment found")
+                        cb("No apartment found", null)
+                    }
+                }
+            });
+        } catch (ex) {
+            next(ex);
+        }
     }
-}
+
+    //     try {
+    //         const query = {
+    //             sql: `UPDATE reservation
+    //         SET status = ?
+    //             WHERE reservation.apartmentId = ? AND reservation.reservationID = ?;`,
+    //             values: [status, var1, var2],
+    //             timeout: 2000
+    //         };
+    //         logger.debug(query)
+    //         // Perform query
+    //         db.query(query, (err, rows, fields) => {
+    //             if (err) {
+    //                 logger.error(rows);
+    //                 cb(err, rows)
+    //                 //next(err);
+    //             } else {
+    //                 logger.info(rows)
+    //                 cb(null, rows)
+    //             }
+    //         });
+    //     } catch (ex) {
+    //         next(ex);
+    //     }
+    // }
 
 }
 

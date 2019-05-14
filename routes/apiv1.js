@@ -58,17 +58,17 @@ router.get("/apartments", (req, res, next) => {
 router.post("/apartments", (req, res, next) => {
   //const apartment = req.body || {};
 
-  assert(typeof req.body.description  === "string", "Description is not a string!");
-  assert(typeof req.body.street_address  === "string", "StreetAddress is not a string!");
-  assert(typeof req.body.postal_code  === "string", "PostalCode is not a string!");
-  assert(typeof req.body.city  === "string", "City is not a string!");
-  assert(typeof req.body.user_id  === "string", "UserId is not a string!");
+  assert(typeof req.body.description === "string", "Description is not a string!");
+  assert(typeof req.body.street_address === "string", "StreetAddress is not a string!");
+  assert(typeof req.body.postal_code === "string", "PostalCode is not a string!");
+  assert(typeof req.body.city === "string", "City is not a string!");
+  assert(typeof req.body.user_id === "string", "UserId is not a string!");
 
   const apartment = new Apartment(req.body.description, req.body.street_address, req.body.postal_code, req.body.city, req.body.user_id)
 
   logger.info(apartment)
 
-    _queryhandler.query2(apartment, (err, result) => {
+  _queryhandler.query2(apartment, (err, result) => {
     if (err) {
       res.status(500).json(err.toString());
     } else {
@@ -99,17 +99,17 @@ router.get("/apartments/:id", (req, res, next) => {
 router.put("/apartments/:id", (req, res, next) => {
   const apartmentId = req.params.id;
 
-  assert(typeof req.body.description  === "string", "Description is not a string!");
-  assert(typeof req.body.street_address  === "string", "StreetAddress is not a string!");
-  assert(typeof req.body.postal_code  === "string", "PostalCode is not a string!");
-  assert(typeof req.body.city  === "string", "City is not a string!");
-  assert(typeof req.body.user_id  === "string", "UserId is not a string!");
+  assert(typeof req.body.description === "string", "Description is not a string!");
+  assert(typeof req.body.street_address === "string", "StreetAddress is not a string!");
+  assert(typeof req.body.postal_code === "string", "PostalCode is not a string!");
+  assert(typeof req.body.city === "string", "City is not a string!");
+  assert(typeof req.body.user_id === "string", "UserId is not a string!");
 
   const apartment = new Apartment(req.body.description, req.body.street_address, req.body.postal_code, req.body.city, req.body.user_id)
 
   console.log(apartmentId, apartment)
 
-    _queryhandler.query4(apartment, apartmentId, (err, result) => {
+  _queryhandler.query4(apartment, apartmentId, (err, result) => {
     if (err) {
       res.status(500).json(err.toString());
     } else {
@@ -124,13 +124,37 @@ router.put("/apartments/:id", (req, res, next) => {
 router.delete("/apartments/:id", (req, res, next) => {
   const apartmentId = req.params.id;
 
-  logger.debug(token)
+  logger.debug("Token: ", token)
 
-    _queryhandler.query5(apartmentId, token, (err, result) => {
+  _queryhandler.query5(apartmentId, token, (err, result) => {
     if (err) {
       res.status(500).json(err.toString());
     } else {
       res.status(200).json(result);
+    }
+  });
+});
+
+//
+// Post new reservation
+//
+router.post("/apartments/:id/reservations", (req, res, next) => {
+  const apartmentId = req.params.id;
+
+  assert(typeof req.body.start_date === "string", "StartDate is not a string!");
+  assert(typeof req.body.end_date === "string", "EndDate is not a string!");
+  assert(typeof req.body.status === "string", "Status is not a string!");
+
+  const reservation = new Reservation(req.body.start_date, req.body.end_date, req.body.status, null, apartmentId)
+
+  logger.info(reservation)
+
+  _queryhandler.query6(reservation, token, (err, result) => {
+    if (err) {
+      res.status(500).json(err.toString());
+    } else {
+      res.status(200).json(result);
+
     }
   });
 });
@@ -167,51 +191,33 @@ router.get("/apartments/:id/reservation/:id2", (req, res, next) => {
 });
 
 //
-// Update reservation status by apartment id and reservation id
+// Update reservation status by apartment id and reservation id, if owned by token
 //
 router.put("/apartments/:id/reservation/:id2", (req, res, next) => {
   const apartmentId = req.params.id;
   const reservationId = req.params.id2;
 
-  assert(typeof req.body.status  === "string", "Description is not a string!");
+  logger.debug("Token: ", token)
+
+  assert(typeof req.body.status === "string", "Description is not a string!");
 
   const status = req.body.status
 
-    _queryhandler.query9(status, apartmentId, reservationId, (err, result) => {
+  _queryhandler.query9(status, apartmentId, reservationId, token, (err, result) => {
     if (err) {
       res.status(500).json(err.toString());
     } else {
       res.status(200).json(status);
-      
-//
-// Post new reservation
-//
-router.post("/apartments/:id/reservations", (req, res, next) => {
-  const apartmentId = req.params.id;
-
-  assert(typeof req.body.start_date  === "string", "StartDate is not a string!");
-  assert(typeof req.body.end_date  === "string", "EndDate is not a string!");
-  assert(typeof req.body.status  === "string", "Status is not a string!");
-
-  const reservation = new Reservation(req.body.start_date, req.body.end_date, req.body.status, null, apartmentId)
-
-  logger.info(reservation)
-
-    _queryhandler.query6(reservation, token, (err, result) => {
-    if (err) {
-      res.status(500).json(err.toString());
-    } else {
-      res.status(200).json(result);
-      
     }
   });
+
 });
 
 // Fall back, display some info
 router.all("*", (req, res) => {
   res.status(200);
   res.json({
-    description: "Apartments API version 2"
+    description: "Apartments API version 1"
   });
 });
 

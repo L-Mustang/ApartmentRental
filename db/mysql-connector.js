@@ -2,33 +2,14 @@ const mysql = require("mysql");
 const config = require("../config/config.json");
 const logger = require("tracer").colorConsole();
 
-// let db = mysql.createConnection( {
-//     host: process.env.DB_HOSTNAME || 'localhost',
-//     user: process.env.DB_USERNAME || config.dbUsername,
-//     password: process.env.DB_USERNAME || config.dbPassword,
-//     database: process.env.DB_USERNAME || config.dbSchema,
-//     insecureAuth : true
-// });
-
-// db.connect( (error) => {
-//     if(error) {
-//         console.log(error);
-//         return;
-//     } else {
-//         console.log("Connected to localhost: i14");
-//     }
-// });
-
-// module.exports = db;
-
 const reconnectTimeout = 2000; // ms.
 
 const connectionSettings = {
   connectionLimit: 20,
-  host: config.remote.dbServer,
-  user: config.remote.dbUsername,
-  password: config.remote.dbPassword,
-  database: config.remote.dbSchema,
+  host: config.local.dbServer,
+  user: config.local.dbUsername,
+  password: config.local.dbPassword,
+  database: config.local.dbSchema,
   port: 3306,
   debug: false,
   multipleStatements: true
