@@ -22,7 +22,7 @@
 					"raw": "{\n\t\"email\": \"test@test.test\",\n\t\"password\": \"test\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/auth/login",
+					"raw": "coolsma.synology.me/auth/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -54,7 +54,7 @@
 					"raw": "{\n    \"email\": \"jsnow@avans.nl\",\n    \"password\": \"yoloswaggins\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/auth/login",
+					"raw": "coolsma.synology.me/auth/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -85,7 +85,7 @@
 					"raw": "{\n\t\"first_name\": \"Jon\",\n\t\"last_name\": \"Snow\",\n\t\"street_address\": \"Dankstraat 72\",\n\t\"postal_code\": \"4666 CD\",\n\t\"city\": \"Winterfell\",\n\t\"date_of_birth\": \"2000-01-01\",\n\t\"phone_number\": \"0612345678\",\n\t\"email\": \"jsnow@avans.nl\",\n\t\"password\": \"yoloswaggins\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/auth/register",
+					"raw": "coolsma.synology.me/auth/register",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -118,7 +118,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/apiv1/apartments/",
+					"raw": "coolsma.synology.me/apiv1/apartments/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -153,7 +153,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/apiv1/apartments/5",
+					"raw": "coolsma.synology.me/apiv1/apartments/5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -193,7 +193,7 @@
 					"raw": "{\n\t\"description\": \"Dank\",\n\t\"street_address\": \"Yoloweg 28\",\n\t\"postal_code\": \"4325 CD\",\n\t\"city\": \"Winterfell\",\n\t\"user_id\": \"2\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/apiv1/apartments/",
+					"raw": "coolsma.synology.me/apiv1/apartments/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -233,7 +233,7 @@
 					"raw": "{\n\t\"apartment_id\": \"12\",\n\t\"description\": \"Danke\",\n\t\"street_address\": \"Yoloweg 28\",\n\t\"postal_code\": \"4325 CD\",\n\t\"city\": \"Winterfell\",\n\t\"user_id\": \"2\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/apiv1/apartments/12",
+					"raw": "coolsma.synology.me/apiv1/apartments/12",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -273,7 +273,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/apiv1/apartments/12",
+					"raw": "coolsma.synology.me/apiv1/apartments/12",
 					"protocol": "http",
 					"host": [
 						"localhost"
