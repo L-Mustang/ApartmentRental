@@ -1,0 +1,292 @@
+{
+	"info": {
+		"_postman_id": "b5dfadc8-7288-4b6b-9752-737bcc2a94de",
+		"name": "Prog4",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Wrong login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"test@test.test\",\n\t\"password\": \"test\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
+					]
+				},
+				"description": "Wrong login attempt"
+			},
+			"response": []
+		},
+		{
+			"name": "Succesful login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"jsnow@avans.nl\",\n    \"password\": \"yoloswaggins\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"first_name\": \"Jon\",\n\t\"last_name\": \"Snow\",\n\t\"street_address\": \"Dankstraat 72\",\n\t\"postal_code\": \"4666 CD\",\n\t\"city\": \"Winterfell\",\n\t\"date_of_birth\": \"2000-01-01\",\n\t\"phone_number\": \"0612345678\",\n\t\"email\": \"jsnow@avans.nl\",\n\t\"password\": \"yoloswaggins\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Apartments",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NTg2MzYyNDgsImlhdCI6MTU1Nzc3MjI0OCwic3ViIjoianNub3dAYXZhbnMubmwifQ.9VEzE7gPlTAAwIDnFzEVFYMJwsJAkmHzumRmWckXNFM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/apiv1/apartments/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apiv1",
+						"apartments",
+						""
+					]
+				},
+				"description": "Geeft een lijst met alle appartementen, met de gegevens van de verhuurder en alle reserveringen op dat appartement\r\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Apartments ID",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NTg2MzYyNDgsImlhdCI6MTU1Nzc3MjI0OCwic3ViIjoianNub3dAYXZhbnMubmwifQ.9VEzE7gPlTAAwIDnFzEVFYMJwsJAkmHzumRmWckXNFM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/apiv1/apartments/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apiv1",
+						"apartments",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Apartments",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NTg2MzYyNDgsImlhdCI6MTU1Nzc3MjI0OCwic3ViIjoianNub3dAYXZhbnMubmwifQ.9VEzE7gPlTAAwIDnFzEVFYMJwsJAkmHzumRmWckXNFM",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"description\": \"Dank\",\n\t\"street_address\": \"Yoloweg 28\",\n\t\"postal_code\": \"4325 CD\",\n\t\"city\": \"Winterfell\",\n\t\"user_id\": \"2\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/apiv1/apartments/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apiv1",
+						"apartments",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Apartments ID",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NTg2MzYyNDgsImlhdCI6MTU1Nzc3MjI0OCwic3ViIjoianNub3dAYXZhbnMubmwifQ.9VEzE7gPlTAAwIDnFzEVFYMJwsJAkmHzumRmWckXNFM",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"apartment_id\": \"12\",\n\t\"description\": \"Danke\",\n\t\"street_address\": \"Yoloweg 28\",\n\t\"postal_code\": \"4325 CD\",\n\t\"city\": \"Winterfell\",\n\t\"user_id\": \"2\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/apiv1/apartments/12",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apiv1",
+						"apartments",
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Apartments ID",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "x-access-token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NTg2MzYyNDgsImlhdCI6MTU1Nzc3MjI0OCwic3ViIjoianNub3dAYXZhbnMubmwifQ.9VEzE7gPlTAAwIDnFzEVFYMJwsJAkmHzumRmWckXNFM",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/apiv1/apartments/12",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"apiv1",
+						"apartments",
+						"12"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
