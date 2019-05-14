@@ -16,23 +16,18 @@ class Queryhandler {
         try {
             // Perform query
             const query = {
-                sql: `SELECT apartment.StreetAddress, apartment.PostalCode, apartment.City, user.FirstName, user.LastName, user.DataOfBirth, reservation.ReservationId  
-                FROM apartment
-                LEFT JOIN reservation
-                ON apartment.ApartmentId = reservation.ApartmentId
-                LEFT JOIN user
-                ON apartment.UserId = user.UserId;`,
+                sql: `SELECT apartment.StreetAddress, apartment.PostalCode, apartment.City, user.FirstName, user.LastName, user.DataOfBirth, reservation.ReservationId FROM apartment LEFT JOIN reservation ON apartment.ApartmentId = reservation.ApartmentId LEFT JOIN user ON apartment.UserId = user.UserId;`,
                 timeout: 2000
             };
 
-            console.log(query)
+            logger.debug(query)
             db.query(query, (err, rows, fields) => {
                 if (err) {
-                    console.log(err);
+                    logger.error(err);
                     cb(err, rows)
                     //next(err);
                 } else {
-                    console.log(rows)
+                    logger.info(rows)
                     cb(null, rows)
                 }
             });
@@ -50,14 +45,14 @@ class Queryhandler {
                 timeout: 2000
             }
 
-            console.log(query)
+            logger.debug(query)
             // Perform query
             db.query(query, (err, rows, fields) => {
                 if (err) {
-                    console.log(err);
+                    logger.err(err);
                     cb(err, rows)
                 } else {
-                    console.log(rows)
+                    logger.info(rows)
                     cb(null, rows)
                 }
             });
@@ -73,25 +68,19 @@ class Queryhandler {
 
         try {
             const query = {
-                sql: `SELECT apartment.StreetAddress, apartment.PostalCode, apartment.City, user.FirstName, user.LastName, user.DataOfBirth, reservation.ReservationId  
-                FROM apartment
-                LEFT JOIN reservation
-                ON apartment.ApartmentId = reservation.ApartmentId
-                LEFT JOIN user
-                ON apartment.UserId = user.UserId
-                WHERE apartment.ApartmentId = ?`,
+                sql: `SELECT apartment.StreetAddress, apartment.PostalCode, apartment.City, user.FirstName, user.LastName, user.DataOfBirth, reservation.ReservationId FROM apartment LEFT JOIN reservation ON apartment.ApartmentId = reservation.ApartmentId LEFT JOIN user ON apartment.UserId = user.UserId WHERE apartment.ApartmentId = ?`,
                 values: [var1],
                 timeout: 2000
             };
-            console.log(query)
+            logger.debug(query)
             // Perform query
             db.query(query, (err, rows, fields) => {
                 if (err) {
-                    console.log(err);
+                    logger.error(err);
                     cb(err, rows)
                     //next(err);
                 } else {
-                    console.log(rows)
+                    logger.info(rows)
                     cb(null, rows)
                 }
             });
@@ -104,9 +93,7 @@ class Queryhandler {
 
         try {
             const query = {
-                sql: `UPDATE apartment
-                SET Description = ?, StreetAddress = ?,  PostalCode = ?, City = ?, UserId = ?
-                WHERE apartment.ApartmentId = ?;`,
+                sql: `UPDATE apartment SET Description = ?, StreetAddress = ?,  PostalCode = ?, City = ?, UserId = ? WHERE apartment.ApartmentId = ?;`,
                 values: [apartment.description, apartment.streetAddress, apartment.postalCode, apartment.city, apartment.userId, var1],
                 timeout: 2000
             };
@@ -122,7 +109,7 @@ class Queryhandler {
                     cb(null, rows)
                 }
             });
-        }catch (ex) {
+        } catch (ex) {
             next(ex);
         }
     }
@@ -142,19 +129,19 @@ class Queryhandler {
                     cb(err, rows)
                     //next(err);
                 } else {
-                    if (!(rows.length==0)) {
-                        const email1 = rows[0].EmailAddress                          
+                    if (!(rows.length == 0)) {
+                        const email1 = rows[0].EmailAddress
                         const email2 = jwt.decode(var2).sub
                         logger.info("Retrieved email: ", email1)
                         logger.info("Decoded token email: ", email2)
 
-                        if (email1==email2){
+                        if (email1 == email2) {
                             const query2 = {
                                 sql: `DELETE FROM apartment WHERE apartment.ApartmentId=?;`,
                                 values: [var1],
                                 timeout: 2000
                             };
-                            
+
                             console.log(query2)
                             // Perform query
                             db.query(query2, (err, rows, fields) => {
@@ -179,15 +166,10 @@ class Queryhandler {
                     }
                 }
             });
-        }catch (ex) {
+        } catch (ex) {
             next(ex);
         }
     }
-
-
 }
-
-
-
 
 module.exports = Queryhandler

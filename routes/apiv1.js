@@ -4,6 +4,7 @@ const Apartments = require("../models/apartments");
 const Apartment = require("../models/apartment");
 const router = express.Router()
 const jwt = require("../helpers/jwt")
+const logger = require("tracer").colorConsole();
 
 const Queryhandler = require("../helpers/queryhandler")
 const _queryhandler = new Queryhandler()
@@ -38,13 +39,6 @@ router.all("*", (req, res, next) => {
 // Get all apartments
 //
 router.get("/apartments", (req, res, next) => {
-  // _apartments.readAll((err, result) => {
-  //   if (err) {
-  //     res.status(500).json(err.toString());
-  //   } else {
-  //     res.status(200).json(result);
-  //   }
-  // });
 
   _queryhandler.query1((err, result) => {
     if (err) {
@@ -70,14 +64,7 @@ router.post("/apartments", (req, res, next) => {
 
   const apartment = new Apartment(req.body.description, req.body.street_address, req.body.postal_code, req.body.city, req.body.user_id)
 
-  console.log(apartment)
-  // _apartments.create(apartment, (err, result) => {
-  //   if (err) {
-  //     res.status(500).json(err.toString());
-  //   } else {
-  //     res.status(200).json(result);
-  //   }
-  // });
+  logger.info(apartment)
 
     _queryhandler.query2(apartment, (err, result) => {
     if (err) {
@@ -93,14 +80,6 @@ router.post("/apartments", (req, res, next) => {
 //
 router.get("/apartments/:id", (req, res, next) => {
   const id = req.params.id;
-
-  // _apartments.read(id, (err, result) => {
-  //   if (err) {
-  //     res.status(500).json(err.toString());
-  //   } else {
-  //     res.status(200).json(result);
-  //   }
-  // });
 
   _queryhandler.query3(id, (err, result) => {
     if (err) {
@@ -143,7 +122,7 @@ router.put("/apartments/:id", (req, res, next) => {
 router.delete("/apartments/:id", (req, res, next) => {
   const apartmentId = req.params.id;
 
-  console.log(token)
+  logger.debug(token)
 
     _queryhandler.query5(apartmentId, token, (err, result) => {
     if (err) {

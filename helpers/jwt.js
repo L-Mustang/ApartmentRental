@@ -13,7 +13,6 @@ function encodeToken(email) {
     iat: moment().unix(),
     sub: email
   };
-  //console.log("Secret key:" + settings.secretkey)
   return jwt.encode(playload, settings.secretkey);
 }
 
