@@ -136,6 +136,54 @@ router.delete("/apartments/:id", (req, res, next) => {
 });
 
 //
+// Get reservation by apartment id
+//
+router.get("/apartments/:id/reservation", (req, res, next) => {
+  const id = req.params.id;
+  _queryhandler.query7(id, (err, result) => {
+    if (err) {
+      res.status(500).json(err.toString());
+    } else {
+      res.status(200).json(result);
+    }
+  });
+
+});
+
+//
+// Get reservation by apartment id and reservation id
+//
+router.get("/apartments/:id/reservation/:id2", (req, res, next) => {
+  const id = req.params.id;
+  const id2 = req.params.id2;
+  _queryhandler.query8(id, id2, (err, result) => {
+    if (err) {
+      res.status(500).json(err.toString());
+    } else {
+      res.status(200).json(result);
+    }
+  });
+
+});
+
+//
+// Update reservation status by apartment id and reservation id
+//
+router.put("/apartments/:id/reservation/:id2", (req, res, next) => {
+  const apartmentId = req.params.id;
+  const reservationId = req.params.id2;
+
+  assert(typeof req.body.status  === "string", "Description is not a string!");
+
+  const status = req.body.status
+
+    _queryhandler.query9(status, apartmentId, reservationId, (err, result) => {
+    if (err) {
+      res.status(500).json(err.toString());
+    } else {
+      res.status(200).json(status);
+      
+//
 // Post new reservation
 //
 router.post("/apartments/:id/reservations", (req, res, next) => {
@@ -154,6 +202,7 @@ router.post("/apartments/:id/reservations", (req, res, next) => {
       res.status(500).json(err.toString());
     } else {
       res.status(200).json(result);
+      
     }
   });
 });
