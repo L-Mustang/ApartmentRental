@@ -25,7 +25,7 @@
 					"raw": "https://github.com/Lord-Mustang/ApartmentRental/blob/Testing/routes/apiv1.js/auth/login",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"https://github.com/Lord-Mustang/ApartmentRental/blob/Testing/routes/apiv1.js"
 					],
 					"port": "8080",
 					"path": [
