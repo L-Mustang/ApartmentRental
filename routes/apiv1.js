@@ -1,6 +1,5 @@
 const express = require("express")
 const assert = require("assert")
-const Apartments = require("../models/apartments");
 const Apartment = require("../models/apartment");
 const Reservation = require("../models/reservation");
 const router = express.Router()
@@ -11,14 +10,10 @@ const db = require("../db/mysql-connector");
 const Queryhandler = require("../helpers/queryhandler")
 const _queryhandler = new Queryhandler()
 
-
-const _apartments = new Apartments();
-
 var token;
 
 // Check voor alle endpoints het token
 router.all("*", (req, res, next) => {
-  //console.log("Token: "+ req.header("x-access-token"))
   assert(
     typeof req.header("x-access-token") == "string",
     "Token is not a string!"
@@ -29,7 +24,7 @@ router.all("*", (req, res, next) => {
 
   jwt.decodeToken(token, (err, payload) => {
     if (err) {
-      console.log("Error handler: " + err.message);
+      logger.error("Error handler: " + err.message);
       next(err);
     } else {
       next();
@@ -107,7 +102,7 @@ router.put("/apartments/:id", (req, res, next) => {
 
   const apartment = new Apartment(req.body.description, req.body.street_address, req.body.postal_code, req.body.city, req.body.user_id)
 
-  console.log(apartmentId, apartment)
+  logger.debug(apartmentId, apartment)
 
   _queryhandler.query4(apartment, apartmentId, (err, result) => {
     if (err) {
@@ -211,6 +206,22 @@ router.put("/apartments/:id/reservation/:id2", (req, res, next) => {
     }
   });
 
+});
+
+//
+// Delete reservation by apartment id and reservation id
+//
+router.delete("/apartments/:id/reservation/:id2", (req, res, next) => {
+  const apartmentId = req.params.id;
+  const reservationId = req.params.id2;
+
+  _queryhandler.query10(apartmentId, reservationId, (err, result) => {
+    if (err) {
+      res.status(500).json(err.toString());
+    } else {
+      res.status(200).json(result);
+    }
+  });
 });
 
 // Fall back, display some info

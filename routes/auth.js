@@ -5,24 +5,9 @@ const User = require("../models/users");
 const db = require("../db/mysql-connector");
 const bcrypt = require("bcryptjs");
 const jwt = require("../helpers/jwt");
+const logger = require("tracer").colorConsole();
 
 const saltRounds = 10;
-
-// // Check token except for 'register' and 'login'
-// router.all(/^(?!\/login|\/register).*$/, function(req, res, next) {
-//   const token = req.header("X-Access-Token") || "";
-//   console.log(token);
-
-//   auth.decodeToken(token, (err, payload) => {
-//     if (err) {
-//       console.log("Error handler: " + err.message);
-//       next(err);
-//       //res.status((err.status || 401 )).json({error: new Error("Not authorised").message});
-//     } else {
-//       next();
-//     }
-//   });
-// });
 
 //
 // Register new user
@@ -55,7 +40,7 @@ router.post("/register", (req, res, next) => {
     // Perform query
     db.query(query, (err, rows, fields) => {
       if (err) {
-        console.log(err);
+        logger.error(err);
         next(err);
       } else {
         res.status(200).json(rows);
@@ -94,7 +79,7 @@ router.post("/login", (req, res, next) => {
           bcrypt.compareSync(req.body.password, rows[0].Password)
         ) {
           token = jwt.encodeToken(req.body.email);
-          console.log("Token: " + token)
+          logger.debug("Token: " + token)
           res.status(200).json({ token: token });
         } else {
           next(new Error("Invalid login, bye"));

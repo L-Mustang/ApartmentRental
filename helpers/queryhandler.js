@@ -1,6 +1,5 @@
 const express = require("express")
 const assert = require("assert")
-const Apartments = require("../models/apartments");
 const router = express.Router()
 const db = require("../db/mysql-connector");
 const jwt = require("../helpers/jwt")
@@ -301,15 +300,15 @@ class Queryhandler {
                 values: [var1, var2],
                 timeout: 2000
             };
-            console.log(query)
+            logger.debug(query)
             // Perform query
             db.query(query, (err, rows, fields) => {
                 if (err) {
-                    console.log(err);
+                    logger.error(err);
                     cb(err, rows)
                     //next(err);
                 } else {
-                    console.log(rows)
+                    logger.info(rows)
                     cb(null, rows)
                 }
             });
@@ -375,30 +374,30 @@ class Queryhandler {
         }
     }
 
-    //     try {
-    //         const query = {
-    //             sql: `UPDATE reservation
-    //         SET status = ?
-    //             WHERE reservation.apartmentId = ? AND reservation.reservationID = ?;`,
-    //             values: [status, var1, var2],
-    //             timeout: 2000
-    //         };
-    //         logger.debug(query)
-    //         // Perform query
-    //         db.query(query, (err, rows, fields) => {
-    //             if (err) {
-    //                 logger.error(rows);
-    //                 cb(err, rows)
-    //                 //next(err);
-    //             } else {
-    //                 logger.info(rows)
-    //                 cb(null, rows)
-    //             }
-    //         });
-    //     } catch (ex) {
-    //         next(ex);
-    //     }
-    // }
+    query10(var1, var2, cb) {
+
+        try {
+            const query = {
+                sql: `DELETE FROM reservation WHERE reservation.ApartmentId=? AND reservation.ReservationId=?;`,
+                values: [var1, var2],
+                timeout: 2000
+            };
+            logger.debug(query)
+            // Perform query
+            db.query(query, (err, rows, fields) => {
+                if (err) {
+                    logger.error(err);
+                    cb(err, rows)
+                    //next(err);
+                } else {
+                    logger.info(rows)
+                    cb(null, rows)
+                }
+            });
+        } catch (ex) {
+            next(ex);
+        }
+    }
 
 }
 
