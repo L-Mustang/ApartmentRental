@@ -37,9 +37,15 @@ class Queryhandler {
 
     query2(apartment, cb) {
         try {
+            // const query = {
+            //     sql: `SET @v1 := (SELECT MAX(ApartmentId) FROM apartment)+1;
+            //     INSERT INTO apartment (ApartmentId, Description, StreetAddress, PostalCode, City, UserId) VALUES (@v1, ?, ?, ?, ?, ?)`,
+            //     values: [apartment.description, apartment.streetAddress, apartment.postalCode, apartment.city, apartment.userId],
+            //     timeout: 2000
+            // }
+
             const query = {
-                sql: `SET @v1 := (SELECT MAX(ApartmentId) FROM apartment)+1;
-                INSERT INTO apartment (ApartmentId, Description, StreetAddress, PostalCode, City, UserId) VALUES (@v1, ?, ?, ?, ?, ?)`,
+                sql: `INSERT INTO apartment (Description, StreetAddress, PostalCode, City, UserId) VALUES (?, ?, ?, ?, ?)`,
                 values: [apartment.description, apartment.streetAddress, apartment.postalCode, apartment.city, apartment.userId],
                 timeout: 2000
             }
@@ -48,7 +54,7 @@ class Queryhandler {
             // Perform query
             db.query(query, (err, rows, fields) => {
                 if (err) {
-                    logger.err(err);
+                    logger.error(err);
                     cb(err, rows)
                 } else {
                     logger.info(rows)
