@@ -1,3 +1,5 @@
+const logger = require("tracer").colorConsole();
+
 class User {
     constructor(firstName, lastName, streetAddress, postalCode, city, dateOfBirth, phoneNumber, email, password) {
       this.firstName = firstName,
@@ -16,7 +18,7 @@ class User {
       if (regexPostCode.test(postalCode)) {
         return postalCode;
       } else {
-        throw new Error("Invalid postal code: "+ postalCode)
+        throw new Error("Invalid PostalCode: "+ postalCode)
       }
     }
 
@@ -35,6 +37,8 @@ class User {
       var mobiel_nummer = /^(((\\+31|0|0031)6){1}[1-9]{1}[0-9]{7})$/;
       if(vast_nummer.test(phone) || mobiel_nummer.test(phone)){
         return phone;
+      } else {
+        throw new Error("Invalid PhoneNumber: " + phone)
       }
   }
 
