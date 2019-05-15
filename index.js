@@ -3,7 +3,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const apiv1 = require("./routes/apiv1");
 const auth = require("./routes/auth");
-const logger = require("tracer").dailyfile({
+const logger = require("tracer").colorConsole();
+const loggerFile = require("tracer").dailyfile({
   root: "./logs",
   maxLogFiles: 10,
   allLogsFileName: "apartments",
@@ -17,7 +18,7 @@ app.use(bodyParser.json());
 
 // Middelware, logging voor alle request
 app.all("*", function(req, res, next) {
-  logger.info("%s", req.hostname);
+  loggerFile.info("%s", req.hostname);
   next();
 });
 
@@ -30,14 +31,14 @@ app.use("/apiv1", apiv1);
 
 // Optional log error
 function errorLoggerHandler(err, req, res, next) {
-  logger.error("%s", err.message);
+  loggerFile.error("%s", err.message);
   next(err);
 }
 
 // Set default error handler
 function errorResponseHandler(err, req, res, next) {
   res.status(500);
-  res.json({ mgs: "Go, you hacker!" });
+  res.json({ msg: "Go, you hacker!" });
 }
 
 // Register the error handlers
@@ -47,8 +48,8 @@ app.use(errorResponseHandler);
 // ECMA 6
 const port = process.env.PORT || config.remote.port;
 const server = app.listen(port, () => {
-  console.log(
-    "The Movie app, the magic happens at port " + server.address().port
+  logger.info(
+    "The Apartments app, the magic happens at port " + server.address().port
   );
 });
 

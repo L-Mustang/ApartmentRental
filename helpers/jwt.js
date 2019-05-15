@@ -13,8 +13,15 @@ function encodeToken(email) {
     iat: moment().unix(),
     sub: email
   };
-  //console.log("Secret key:" + settings.secretkey)
   return jwt.encode(playload, settings.secretkey);
+}
+
+//
+// Decode (returns decoded token)
+//
+function decode(token) {
+    const payload = jwt.decode(token, settings.secretkey);
+    return payload
 }
 
 //
@@ -37,5 +44,6 @@ function decodeToken(token, cb) {
 
 module.exports = {
   encodeToken,
-  decodeToken
+  decodeToken,
+  decode
 };
