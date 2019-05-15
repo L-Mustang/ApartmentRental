@@ -32,19 +32,12 @@ class User {
 
     validatePhone(phone) {
       var vast_nummer = /^(((0)[1-9]{2}[0-9][-]?[1-9][0-9]{5})|((\\+31|0|0031)[1-9][0-9][-]?[1-9][0-9]{6}))$/;
-      var mobiel_nummer = /^(((\\+31|0|0031)6){1}[1-9]{1}[0-9]{7})$/i;
-      return (vast_nummer.test(phone) || mobiel_nummer.test(phone));
+      var mobiel_nummer = /^(((\\+31|0|0031)6){1}[1-9]{1}[0-9]{7})$/;
+      if(vast_nummer.test(phone) || mobiel_nummer.test(phone)){
+        return phone;
+      }
   }
 
-  
-    // validateUsername(username) {
-    //   let regexUser = new RegExp("^[a-zA-Z0-9]+([_-]?[a-zA-Z0-9])*$");
-    //   if (regexUser.test(username)) {
-    //     return username;
-    //   } else {
-    //     throw new Error("Invalid Username: " + username);
-    //   }
-    // }
-  }
+}
   
   module.exports = User;
