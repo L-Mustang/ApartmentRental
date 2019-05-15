@@ -51,5 +51,17 @@ describe('Users/', ()=> {
             })
     })
 
-    it('Login with user')
+    it('User succesfully login', function (done) {
+        chai.request(server)
+            .post('/auth/login')
+            .set('Content-Type', 'application/json')
+            .send({
+                "email": "jsnow@avans.nl",
+                "password": "yoloswaggins"
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                done();
+            })
+    });
 });
