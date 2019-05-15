@@ -12,4 +12,4 @@ before_script:
   - node_modules/.bin/newman --version
 
 script:
-  - node_modules/.bin/newman run test/Prog4.postman_collection.json
+  - mocha --exit --reporter list
