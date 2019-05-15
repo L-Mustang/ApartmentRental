@@ -1,0 +1,17 @@
+{
+    "local": {
+        "dbUsername": "root",
+        "dbPassword": "",
+        "dbSchema": "2019-i14-appartementen",
+        "dbServer": "localhost",
+        "port": "3306"
+    },
+    "secretkey": "MyServerSuperSecretKey-123454321AbCd-",
+    "remote": {
+        "dbServer": "coolsma.synology.me",
+        "dbUsername": "2019-I14",
+        "dbPassword": "2019-I14",
+        "dbSchema": "2019-i14-appartementen",
+        "port": 8080
+    }
+}
