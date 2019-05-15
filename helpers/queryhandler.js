@@ -48,7 +48,7 @@ class Queryhandler {
             // Perform query
             db.query(query, (err, rows, fields) => {
                 if (err) {
-                    logger.err(err);
+                    logger.error(err);
                     cb(err, rows)
                 } else {
                     logger.info(rows)
