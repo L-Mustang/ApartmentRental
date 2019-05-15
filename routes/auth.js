@@ -67,8 +67,6 @@ router.post("/login", (req, res, next) => {
       timeout: 2000
     };
 
-
-
     // Perform query
     db.query(query, (err, rows, fields) => {
       if (err) {
@@ -87,6 +85,7 @@ router.post("/login", (req, res, next) => {
       }
     });
   } catch (ex) {
+    logger.debug(ex)
     next(ex);
   }
 });
