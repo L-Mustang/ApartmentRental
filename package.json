@@ -14,12 +14,13 @@
     "mocha": "^6.1.4",
     "moment": "^2.24.0",
     "mysql": "^2.17.1",
+    "newman": "^4.4.1",
     "tracer": "^0.9.8"
   },
   "devDependencies": {},
   "scripts": {
     "start": "node index.js",
-    "test": "test"
+    "test": "mocha --exit --reporter list"
   },
   "repository": {
     "type": "git",

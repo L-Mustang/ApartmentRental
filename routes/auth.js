@@ -28,7 +28,8 @@ router.post("/register", (req, res, next) => {
     // Create new user object, hash password (do not store in db).
     // Throws err if no valid object can be constructed
     const hash = bcrypt.hashSync(req.body.password, saltRounds);
-    const user = new User(req.body.first_name, req.body.last_name, req.body.street_address, req.body.postal_code, req.body.city, req.body.date_of_birth, req.body.phone_number, req.body.email, hash);
+    var user;
+    user = new User(req.body.first_name, req.body.last_name, req.body.street_address, req.body.postal_code, req.body.city, req.body.date_of_birth, req.body.phone_number, req.body.email, hash);
 
     // Construct query object
     const query = {
@@ -67,8 +68,6 @@ router.post("/login", (req, res, next) => {
       timeout: 2000
     };
 
-
-
     // Perform query
     db.query(query, (err, rows, fields) => {
       if (err) {
@@ -87,6 +86,7 @@ router.post("/login", (req, res, next) => {
       }
     });
   } catch (ex) {
+    logger.debug(ex)
     next(ex);
   }
 });
