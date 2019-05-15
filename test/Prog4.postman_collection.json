@@ -22,12 +22,12 @@
 					"raw": "{\n\t\"email\": \"test@test.test\",\n\t\"password\": \"test\"\n}"
 				},
 				"url": {
-					"raw": "https://apartmentrental.herokuapp.com/auth/login",
-					"protocol": "http",
+					"raw": "apartmentrental.herokuapp.com/auth/login",
+					"protocol": "https",
 					"host": [
-						"https://apartmentrental.herokuapp.com"
+						"apartmentrental.herokuapp.com"
 					],
-					"port": "8080",
+					"port": "",
 					"path": [
 						"auth",
 						"login"
