@@ -118,12 +118,12 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "localhost:8080/apiv1/apartments/",
-					"protocol": "http",
+					"raw": "https://apartmentrental.herokuapp.com/apiv1/apartments/",
+					"protocol": "https",
 					"host": [
-						"localhost"
+						"apartmentrental.herokuapp.com/"
 					],
-					"port": "8080",
+					"port": "",
 					"path": [
 						"apiv1",
 						"apartments",
