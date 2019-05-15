@@ -76,4 +76,14 @@ describe('apartments/', () => {
                 done()
             })
     });
+
+    it('Get all apartments', (done) => {
+        chai.request(server)
+        .get('/apiv1/apartements')
+        .set('x-access-token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NTg2MzYyNDgsImlhdCI6MTU1Nzc3MjI0OCwic3ViIjoianNub3dAYXZhbnMubmwifQ.9VEzE7gPlTAAwIDnFzEVFYMJwsJAkmHzumRmWckXNFM','Content-Type', 'application/json')
+        .end( (err, res) => {
+            res.should.have.status(200);
+            done()
+        })
+    })
 });
