@@ -20,7 +20,7 @@
   "devDependencies": {},
   "scripts": {
     "start": "node index.js",
-    "test": "test"
+    "test": "mocha --exit --reporter list"
   },
   "repository": {
     "type": "git",
