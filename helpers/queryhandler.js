@@ -408,3 +408,5 @@ class Queryhandler {
 }
 
 module.exports = Queryhandler
+
+//heroku fix?
